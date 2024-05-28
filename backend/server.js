@@ -20,6 +20,7 @@ connectDB();
 //api endpoints
 //for foodRouter
 app.use("/api/food", foodRouter); // endpoint address
+app.use("/images", express.static("uploads")); // now uploads folder will xposed on the end point. because we mounted that folder at end point
 
 app.get("/", (req, res) => {
   res.send("API Working");

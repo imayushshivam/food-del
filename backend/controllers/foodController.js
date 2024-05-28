@@ -23,4 +23,16 @@ const addFood = async (req, res) => {
   }
 };
 
-export { addFood };
+//all food list
+// here we will create the logic , using that we cann access all the food item ,and send them as a response
+const listFood = async (req, res) => {
+  try {
+    const foods = await foodModel.find({}); // we get all the data of the food item in this variable
+    res.json({ success: true, data: foods });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Eroor" });
+  }
+};
+
+export { addFood, listFood };
