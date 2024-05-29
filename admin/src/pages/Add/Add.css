@@ -8,6 +8,23 @@
 .add form {
   gap: 20px;
 }
+.add-img-upload {
+  position: relative; /* Positioning context for absolute positioning */
+}
+.add-img-upload label {
+  display: inline-block;
+  cursor: pointer;
+}
+.add-img-upload input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+}
 
 .add-img-upload img {
   width: 120px;
@@ -15,30 +32,52 @@
 
 .add-product-name,
 .add-product-description {
-  width: max(40%, 280px);
+  width: 100%; /* Using percentage for consistency */
+  max-width: 280px; /* Limiting width for larger screens */
 }
-
 .add-product-name input,
 .add-product-description textarea {
+  width: 100%;
   padding: 10px;
+  border: 1px solid #ccc; /* Adding a border for input fields */
+  border-radius: 5px; /* Adding border radius for a more modern look */
+}
+.add-product-name input:focus,
+.add-product-description textarea:focus {
+  outline: none; /* Removing outline on focus for better aesthetics */
+  border-color: tomato; /* Changing border color on focus for better visibility */
 }
 
 .add-category-price {
   display: flex;
   gap: 30px;
+  align-items: center;
 }
-
 .add-category-price select,
 .add-category-price input {
+  width: 100%;
   max-width: 120px;
   padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.add-category-price select:focus,
+.add-category-price input:focus {
+  outline: none;
+  border-color: tomato;
 }
 
 .add-btn {
+  width: 100%;
   max-width: 120px;
   border: none;
   padding: 10px;
-  background-color: black;
+  background-color: rgb(245, 126, 105); /* Changing button color to blue */
   color: white;
   cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; /* Adding transition for smooth hover effect */
+}
+.add-btn:hover {
+  background-color: tomato; /* Darker shade of blue on hover */
 }

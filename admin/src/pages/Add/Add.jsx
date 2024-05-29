@@ -61,7 +61,7 @@ const Add = ({ url }) => {
             onChange={(e) => setImage(e.target.files[0])}
             type="file"
             id="image"
-            hidden
+            // hidden
             required
           />
         </div>
