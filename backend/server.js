@@ -5,6 +5,7 @@ import foodRouter from "./routes/foodRoute.js";
 import userRouter from "./routes/userRoute.js";
 import "dotenv/config";
 import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
 
 //app config
 //initialising app using the express pack
@@ -28,6 +29,9 @@ app.use("/api/user", userRouter);
 
 //initialise end points
 app.use("/api/cart", cartRouter);
+
+//use order router to place the users order
+app.use("/api/order", orderRouter);
 
 app.get("/", (req, res) => {
   res.send("API Working");
