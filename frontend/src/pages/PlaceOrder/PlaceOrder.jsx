@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
+import axios from "axios";
 
 const PlaceOrder = () => {
   const { getTotalCartAmount, token, food_list, cartItems, url } =
@@ -27,16 +28,46 @@ const PlaceOrder = () => {
   };
 
   //to check our handler is properly working or not.
-  useEffect(() => {
+  /*  useEffect(() => {
     console.log(data);
   }, [data]);
+ */
+  //a arrow function , by using that we will redirrect to the payment gateway
+  const placeOrder = async (event) => {
+    event.preventDefault(); // it will not reload the webpage, after submitting the form.
+    //to structure all the orders data , as we have created in the api
+    let orderItems = []; // in this one we will add the order related data.
+    food_list.map((item) => {
+      if (cartItems[item._id] > 0) {
+        let itemInfo = item;
+        itemInfo["quantity"] = cartItems[item._id];
+        orderItems.push(itemInfo);
+      }
+    });
+    /*     console.log(orderItems); */
+    let orderData = {
+      address: data,
+      items: orderItems,
+      amount: getTotalCartAmount() + 16,
+    };
+    let response = await axios.post(url + "/api/order/place", orderData, {
+      headersP: { token },
+    });
+    if (response.data.success) {
+      const { session_url } = response.data;
+      window.location.replace(session_url);
+    } else {
+      alert("Eroor");
+    }
+  };
 
   return (
-    <form className="place-order">
+    <form onSubmit={placeOrder} className="place-order">
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
         <div className="multi-fields">
           <input
+            required
             name="firstName"
             onChange={onChangeHandler}
             value={data.firstName}
@@ -44,6 +75,7 @@ const PlaceOrder = () => {
             placeholder="First name"
           />
           <input
+            required
             name="lastName"
             onChange={onChangeHandler}
             value={data.lastName}
@@ -52,6 +84,7 @@ const PlaceOrder = () => {
           />
         </div>
         <input
+          required
           name="email"
           onChange={onChangeHandler}
           value={data.email}
@@ -59,6 +92,7 @@ const PlaceOrder = () => {
           placeholder="mail@domail.com"
         />
         <input
+          required
           name="street"
           onChange={onChangeHandler}
           value={data.street}
@@ -67,6 +101,7 @@ const PlaceOrder = () => {
         />
         <div className="multi-fields">
           <input
+            required
             name="city"
             onChange={onChangeHandler}
             value={data.city}
@@ -74,6 +109,7 @@ const PlaceOrder = () => {
             placeholder="City"
           />
           <input
+            required
             name="state"
             onChange={onChangeHandler}
             value={data.state}
@@ -83,6 +119,7 @@ const PlaceOrder = () => {
         </div>
         <div className="multi-fields">
           <input
+            required
             name="zipcode"
             onChange={onChangeHandler}
             value={data.zipcode}
@@ -90,6 +127,7 @@ const PlaceOrder = () => {
             placeholder="Zip code"
           />
           <input
+            required
             name="country"
             onChange={onChangeHandler}
             value={data.country}
@@ -98,6 +136,7 @@ const PlaceOrder = () => {
           />
         </div>
         <input
+          required
           name="phone"
           onChange={onChangeHandler}
           value={data.phone}
@@ -124,7 +163,7 @@ const PlaceOrder = () => {
               <b>${getTotalCartAmount() > 0 ? getTotalCartAmount() + 16 : 0}</b>
             </div>
           </div>
-          <button>Proceed To Payment</button>
+          <button type="submit">Proceed To Payment</button>
         </div>
       </div>
     </form>
