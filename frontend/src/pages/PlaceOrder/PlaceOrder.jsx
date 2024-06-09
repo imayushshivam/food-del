@@ -51,7 +51,7 @@ const PlaceOrder = () => {
       amount: getTotalCartAmount() + 16,
     };
     let response = await axios.post(url + "/api/order/place", orderData, {
-      headersP: { token },
+      headers: { token },
     });
     if (response.data.success) {
       const { session_url } = response.data;
