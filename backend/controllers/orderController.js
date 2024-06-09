@@ -57,5 +57,33 @@ const placeOrder = async (req, res) => {
     res.json({ success: false, message: "Error" });
   }
 };
+//this is the function to verify the order's payment.
+const verifyOrder = async (req, res) => {
+  const { orderId, success } = req.body;
+  try {
+    if (success == "true") {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      res.json({ success: true, message: "paid" });
+    } else {
+      await orderModel.findByIdAndDelete(orderId);
+      res.json({ success: false, message: "Not Paid" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Erroor" });
+  }
+};
 
-export { placeOrder };
+// user orders for frontend.
+const userOrders = async (req, res) => {
+  try {
+    // from the below var, we wil get the all orders from of provided userId, and save it in the orders.
+    const orders = await orderModel.find({ userId: req.body.userId });
+    res.json({ success: true, data: orders });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error" });
+  }
+};
+
+export { placeOrder, verifyOrder, userOrders };
