@@ -22,6 +22,19 @@ const Orders = ({ url }) => {
     }
   };
 
+  const statusHandler = async (event, orderId) => {
+    // console.log(event, orderId);
+    //after that we will add the logic , whenever we will change the order status from the admin order panel , it will also change it in dB and reflect it.
+    //calling API
+    const response = await axios.post(url + "/api/order/status", {
+      orderId,
+      status: event.target.value,
+    });
+    if (response.data.success) {
+      await fetchAllOrders();
+    }
+  };
+
   useEffect(() => {
     fetchAllOrders();
   }, []);
@@ -32,8 +45,6 @@ const Orders = ({ url }) => {
       <div className="order-list">
         {orders.map((order) => (
           <div className="order-item" key={order.id}>
-            {" "}
-            {/* Use a unique identifier */}
             <img src={assets.parcel_icon} alt="" />
             <div>
               <p className="order-item-food">
@@ -62,7 +73,10 @@ const Orders = ({ url }) => {
             </div>
             <p>Items : {order.items.length} </p>
             <p>${order.amount} </p>
-            <select>
+            <select
+              onChange={(event) => statusHandler(event, order.id)}
+              value={order.status}
+            >
               <option value="Food Processing">Food Processing</option>
               <option value="Out for Delivery">Out for Delivery</option>
               <option value="Delivered">Delivered</option>
