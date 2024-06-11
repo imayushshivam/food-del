@@ -3,15 +3,18 @@ import cors from "cors";
 import { connectDB } from "./config/db.js";
 import foodRouter from "./routes/foodRoute.js";
 import userRouter from "./routes/userRoute.js";
-import "dotenv/config";
+// import "dotenv/config";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import dotenv from "dotenv";
+//idk why i m facing  issue with this config file n all
+dotenv.config();
 
 //app config
 //initialising app using the express pack
 const app = express();
 //define port number for our server
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 //middleware
 //initiallising
