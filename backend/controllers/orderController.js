@@ -39,7 +39,7 @@ const placeOrder = async (req, res) => {
         product_data: {
           name: "Delivery Charges",
         },
-        unit_amount: 16 * 100 * 80,
+        unit_amount: 1 * 100 * 80,
       },
       quantity: 1,
     });
