@@ -7,11 +7,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
 
-<<<<<<< HEAD
   const url = "https://food-del-backend-tqmp.onrender.com";
-=======
-  const url = "https://backend-mi0q.onrender.com";
->>>>>>> 2f9a277a953b856fd4b8aa64cda27c9e5df080a9
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
 
